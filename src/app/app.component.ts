@@ -10,16 +10,19 @@ import { Task } from './components/task/task.contructor';
 export class AppComponent {
   @ViewChild('addTaskRef') addTaskRef: ElementRef;
 
-  id = 1;
+  private id = 1;
   tasks: Array<ITask> = [];
   filteredTasks: Array<ITask> = [];
   completedTasks: Array<ITask> = [];
 
   addTask() {
-    this.tasks.push(new Task(this.id, this.addTaskRef.nativeElement.value, false, 2));
-    this.filteredTasks = this.tasks;
-    this.id += 1;
-    this.clearAddTaskInput();
+    const { value } = this.addTaskRef.nativeElement;
+    if (value) {
+      this.tasks.push(new Task(this.id, value, false, 2));
+      this.filteredTasks = this.tasks;
+      this.id += 1;
+      this.clearAddTaskInput();
+    }
   }
 
   onFilter(event: KeyboardEvent) {
@@ -41,7 +44,7 @@ export class AppComponent {
     return this.tasks.findIndex(item => item.id === id);
   }
 
-  trackByFn(index, item) {
+  trackByFn(index, item): number {
     return item.id;
   }
 
@@ -49,9 +52,8 @@ export class AppComponent {
     this.addTaskRef.nativeElement.value = '';
   }
 
-  changeStatus(e: any) {
-    const index = this.findTaskById(e.id);
-    this.tasks[index].completed = true;
+  changeStatus(item: ITask) {
+    const index = this.findTaskById(item.id);
     const task = this.tasks.splice(index, 1);
     this.completedTasks.push(task[0]);
   }

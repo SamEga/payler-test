@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ITask } from '../task/tasks.model';
 
-
 export interface IClimportant {
   code: 3 | 2 | 1;
   title: 'low' | 'mid' | 'hi';
@@ -9,8 +8,7 @@ export interface IClimportant {
 
 @Component({
   selector: 'app-cl-important',
-  templateUrl: './cl-important.component.html',
-  styleUrls: ['./cl-important.component.css'],
+  template: `<select [(ngModel)]="task.important"><option *ngFor="let cl of clImportant" [ngValue]="cl.code">{{ cl.title }}</option></select> `,
 })
 export class ClImportantComponent {
   @Input() task: ITask;
