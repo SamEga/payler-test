@@ -1,0 +1,7 @@
+<div class="task media text-muted pt-3">
+  <p>{{task.title}}</p>
+  <div class="wrapper">
+    <app-cl-important [task]="task"></app-cl-important>
+    <button class="btn btn-primary" *ngIf="!task.completed" (click)="onChangeStatus(task)">Выполнено</button>
+  </div>
+</div>
